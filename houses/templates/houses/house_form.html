@@ -1,0 +1,24 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+<section class="content">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <small>Create</small>
+        <h2>新增房源</h2>
+      </div>
+    </div>
+
+    <div class="category-card" style="max-width: 720px;">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn btn-dark" type="submit">送出刊登</button>
+        <a class="btn btn-light" href="{% url 'house_list' %}">返回列表</a>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

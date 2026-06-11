@@ -1,0 +1,118 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container">
+
+        <div class="section-head">
+            <div>
+                <small>My Favorites</small>
+                <h2>我的收藏</h2>
+            </div>
+
+            <a href="{% url 'house_list' %}" class="btn btn-light">
+                返回首頁
+            </a>
+        </div>
+
+        <div class="listing-grid">
+
+            {% for favorite in favorites %}
+
+            <div class="listing-card">
+
+                <div class="listing-cover cover-2">
+
+                    <div class="listing-badge">
+                        ❤️ 已收藏
+                    </div>
+
+                    <div class="listing-fake">
+                        <div class="top-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="rect"></div>
+                    </div>
+
+                </div>
+
+                <div class="listing-content">
+
+                    <div class="listing-top">
+                        <h3>{{ favorite.house.title }}</h3>
+
+                        <div class="price-pill">
+                            ${{ favorite.house.price }}/月
+                        </div>
+                    </div>
+
+                    <p>
+                        {{ favorite.house.room_type }}
+                        ・
+                        {{ favorite.house.size }} 坪
+                        ・
+                        {{ favorite.house.location }}
+                    </p>
+
+                    <p>
+                        上架人：
+                        {{ favorite.house.owner.username }}
+                    </p>
+
+                    <div class="listing-actions">
+
+                        <a
+                            href="{% url 'house_detail' favorite.house.id %}"
+                            class="link-btn"
+                        >
+                            查看詳情
+                        </a>
+
+                        <a
+                            href="{% url 'toggle_favorite' favorite.house.id %}"
+                            class="fav"
+                        >
+                            💔 取消收藏
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="category-card">
+
+                <h3>
+                    目前沒有收藏房源
+                </h3>
+
+                <p>
+                    快去首頁找找喜歡的房子吧！
+                </p>
+
+                <br>
+
+                <a
+                    href="{% url 'house_list' %}"
+                    class="btn btn-dark"
+                >
+                    去找房
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

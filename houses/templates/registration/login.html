@@ -1,0 +1,21 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+<section class="content">
+    <div class="container">
+        <div class="category-card">
+            <h2>登入</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button class="btn btn-dark" type="submit">登入</button>
+            </form>
+
+            <br>
+            <a class="link-btn" href="{% url 'register' %}">還沒有帳號？註冊</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

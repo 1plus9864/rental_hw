@@ -1,0 +1,98 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class UserProfile(models.Model):
+    ROLE_CHOICES = [
+        ('renter', '租客'),
+        ('landlord', '房東'),
+        ('admin', '管理員'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(
+        max_length=20,
+        choices=ROLE_CHOICES,
+        default='renter'
+    )
+    phone = models.CharField(max_length=20, blank=True)
+    bio = models.TextField(blank=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.get_role_display()}'
+
+
+class House(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='上架人')
+    title = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    price = models.IntegerField()
+    room_type = models.CharField(max_length=50)
+    size = models.FloatField()
+    description = models.TextField()
+    image = models.ImageField(
+        upload_to='houses/',
+        blank=True,
+        null=True
+    )
+    def __str__(self):
+        return self.title
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    house = models.ForeignKey(
+        House,
+        on_delete=models.CASCADE
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+class Appointment(models.Model):
+
+    STATUS_CHOICES = [
+        ('pending', '待確認'),
+        ('approved', '已同意'),
+        ('rejected', '已拒絕'),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    house = models.ForeignKey(
+        House,
+        on_delete=models.CASCADE
+    )
+
+    appointment_date = models.DateField()
+
+    message = models.TextField(
+        blank=True
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f'{self.user.username} 預約 {self.house.title}'
+
+    class Meta:
+        unique_together = (
+            'user',
+            'house'
+        )
+
+    def __str__(self):
+        return f'{self.user.username} ❤️ {self.house.title}'

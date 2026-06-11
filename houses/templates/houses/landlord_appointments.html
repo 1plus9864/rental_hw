@@ -1,0 +1,68 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container">
+
+        <div class="section-head">
+            <div>
+                <small>Landlord</small>
+                <h2>房源預約管理</h2>
+            </div>
+        </div>
+
+        <div class="listing-grid">
+
+            {% for appointment in appointments %}
+
+            <div class="listing-card">
+
+                <div class="listing-content">
+
+                    <h3>
+                        {{ appointment.house.title }}
+                    </h3>
+
+                    <p>
+                        預約人：
+                        {{ appointment.user.username }}
+                    </p>
+
+                    <p>
+                        預約日期：
+                        {{ appointment.appointment_date }}
+                    </p>
+
+                    <p>
+                        狀態：
+                        {{ appointment.get_status_display }}
+                    </p>
+
+                    <p>
+                        留言：
+                        {{ appointment.message }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="category-card">
+
+                <h3>
+                    目前沒有預約紀錄
+                </h3>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

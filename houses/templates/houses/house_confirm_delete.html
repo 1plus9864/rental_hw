@@ -1,0 +1,42 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container">
+
+        <div class="category-card">
+
+            <h2>
+                刪除房源
+            </h2>
+
+            <br>
+
+            <p>
+                確定要刪除：
+                {{ house.title }}
+                嗎？
+            </p>
+
+            <br>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-dark"
+                >
+                    確認刪除
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

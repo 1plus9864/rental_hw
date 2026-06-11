@@ -1,0 +1,78 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container">
+
+        <div class="section-head">
+            <div>
+                <small>My Appointments</small>
+                <h2>我的預約</h2>
+            </div>
+        </div>
+
+        <div class="listing-grid">
+
+            {% for appointment in appointments %}
+
+            <div class="listing-card">
+
+                <div class="listing-content">
+
+                    <h3>
+                        {{ appointment.house.title }}
+                    </h3>
+
+                    <p>
+                        日期：
+                        {{ appointment.appointment_date }}
+                    </p>
+
+                    <p>
+                        狀態：
+                        {{ appointment.get_status_display }}
+                    </p>
+
+                    <p>
+                        留言：
+                        {{ appointment.message }}
+                    </p>
+
+                    <div class="listing-actions">
+
+                        <a
+                            href="{% url 'house_detail' appointment.house.id %}"
+                            class="link-btn"
+                        >
+                            查看房源
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="category-card">
+
+                <h3>
+                    目前沒有預約紀錄
+                </h3>
+
+                <p>
+                    快去找喜歡的房子吧！
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

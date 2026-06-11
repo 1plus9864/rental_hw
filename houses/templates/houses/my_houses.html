@@ -1,0 +1,83 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container">
+
+        <div class="section-head">
+            <div>
+                <small>My Houses</small>
+                <h2>我的房源</h2>
+            </div>
+
+            <a href="{% url 'house_create' %}" class="btn btn-dark">
+                新增房源
+            </a>
+        </div>
+
+        <div class="listing-grid">
+
+            {% for house in houses %}
+
+            <div class="listing-card">
+
+                <div class="listing-content">
+
+                    <div class="listing-top">
+                        <h3>{{ house.title }}</h3>
+
+                        <div class="price-pill">
+                            ${{ house.price }}/月
+                        </div>
+                    </div>
+
+                    <p>
+                        {{ house.room_type }}
+                        ・
+                        {{ house.location }}
+                    </p>
+
+                    <div class="listing-actions">
+
+                        <a
+                            href="{% url 'house_detail' house.id %}"
+                            class="link-btn"
+                        >
+                            查看
+                        </a>
+
+                        <a
+                            href="{% url 'house_update' house.id %}"
+                            class="link-btn"
+                        >
+                            修改
+                        </a>
+
+                        <a
+                            href="{% url 'house_delete' house.id %}"
+                            class="fav"
+                        >
+                            刪除
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="category-card">
+                <h3>目前沒有房源</h3>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

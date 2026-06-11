@@ -1,0 +1,21 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+<section class="content">
+    <div class="container">
+        <div class="category-card">
+            <h2>註冊帳號</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button class="btn btn-dark" type="submit">註冊</button>
+            </form>
+
+            <br>
+            <a class="link-btn" href="{% url 'login' %}">已經有帳號？登入</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'houses/base.html' %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container">
+
+        <div class="category-card">
+
+            <h2 style="margin-bottom:20px;">
+                預約看房
+            </h2>
+
+            <p style="margin-bottom:20px;">
+                房源：{{ house.title }}
+            </p>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button
+                    type="submit"
+                    class="btn btn-dark"
+                >
+                    送出預約
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
