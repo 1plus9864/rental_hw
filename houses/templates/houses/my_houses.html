@@ -33,9 +33,9 @@
                     </div>
 
                     <p>
-                        {{ house.room_type }}
+                        {% if house.house_type %}{{ house.house_type.type_name }}{% endif %}
                         ・
-                        {{ house.location }}
+                        {% if house.address %}{{ house.address.city }} {{ house.address.district }}{% endif %}
                     </p>
 
                     <div class="listing-actions">

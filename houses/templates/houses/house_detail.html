@@ -4,48 +4,53 @@
 <section class="content">
   <div class="container">
     <div class="hero-card">
-      {% if house.image %}
-        <div style="
-            width:100%;
-            margin-bottom:24px;
-        ">
+
+      {% with first_image=house.images.all|first %}
+
+        {% if first_image and first_image.image_url %}
+          <div style="width:100%; margin-bottom:24px;">
             <img
-                src="{{ house.image.url }}"
-                alt="{{ house.title }}"
-                style="
-                    width:100%;
-                    height:450px;
-                    object-fit:cover;
-                    border-radius:20px;
-                "
+              src="{{ first_image.image_url }}"
+              alt="{{ house.title }}"
+              style="
+                width:100%;
+                height:450px;
+                object-fit:cover;
+                border-radius:20px;
+              "
             >
-        </div>
+          </div>
         {% else %}
-        <div class="room-preview">
-          <div class="mini-layout">
-            <div class="dots">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <div class="layout-grid">
-              <div class="layout-big"></div>
-              <div class="layout-small"></div>
-              <div class="layout-row">
-                <div class="layout-bottom"></div>
-                <div class="layout-bottom"></div>
-                <div class="layout-bottom"></div>
+          <div class="room-preview">
+            <div class="mini-layout">
+              <div class="dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+
+              <div class="layout-grid">
+                <div class="layout-big"></div>
+                <div class="layout-small"></div>
+
+                <div class="layout-row">
+                  <div class="layout-bottom"></div>
+                  <div class="layout-bottom"></div>
+                  <div class="layout-bottom"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         {% endif %}
 
       <div class="hero-info">
         <div>
           <div class="label">房源詳細資料</div>
+
           <h3>{{ house.title }}</h3>
+
           <p>上架人：{{ house.owner.username }}</p>
+
           <p>{{ house.description }}</p>
         </div>
 
@@ -56,24 +61,45 @@
       </div>
 
       <div class="tags">
-        <span class="tag">地區：{{ house.location }}</span>
-        <span class="tag">房型：{{ house.room_type }}</span>
-        <span class="tag">坪數：{{ house.size }} 坪</span>
+
+        <span class="tag">
+          地區：
+          {% if house.address %}
+            {{ house.address }}
+          {% endif %}
+        </span>
+
+        <span class="tag">
+          房型：
+          {% if house.house_type %}
+            {{ house.house_type.type_name }}
+          {% endif %}
+        </span>
+
+        <span class="tag">
+          坪數：{{ house.size }} 坪
+        </span>
+
       </div>
+
       {% if user.is_authenticated and user.userprofile.role == 'renter' %}
-
-          <a
-              href="{% url 'create_appointment' house.id %}"
-              class="btn btn-dark"
-              style="margin-top:20px;"
-          >
-              預約看房
-          </a>
-
+        <a
+          href="{% url 'create_appointment' house.id %}"
+          class="btn btn-dark"
+          style="margin-top:20px;"
+        >
+          預約看房
+        </a>
       {% endif %}
 
       <br>
-      <a class="btn btn-light" href="{% url 'house_list' %}">回房源列表</a>
+
+      <a class="btn btn-light" href="{% url 'house_list' %}">
+        回房源列表
+      </a>
+
+      {% endwith %}
+
     </div>
   </div>
 </section>

@@ -61,23 +61,29 @@
 
             <div class="listing-card">
 
-                <div class="listing-cover cover-1">
+                                <div class="listing-cover cover-1">
 
-                    <div class="listing-badge">
-                        房源
-                    </div>
+                                        <div class="listing-badge">
+                                                房源
+                                        </div>
 
-                    <div class="listing-fake">
-                        <div class="top-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
+                                        {% with first_image=house.images.all|first %}
+                                            {% if first_image and first_image.image_url %}
+                                                <img src="{{ first_image.image_url }}" alt="{{ house.title }}" style="width:100%;height:180px;object-fit:cover;border-radius:12px;">
+                                            {% else %}
+                                                <div class="listing-fake">
+                                                    <div class="top-dots">
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                    </div>
 
-                        <div class="rect"></div>
-                    </div>
+                                                    <div class="rect"></div>
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
 
-                </div>
+                                </div>
 
                 <div class="listing-content">
 
@@ -89,13 +95,17 @@
                         </div>
                     </div>
 
-                    <p>
-                        {{ house.room_type }}
-                        ・
-                        {{ house.size }} 坪
-                        ・
-                        {{ house.location }}
-                    </p>
+                                        <p>
+                                                {% if house.house_type %}
+                                                    {{ house.house_type.type_name }}
+                                                {% endif %}
+                                                ・
+                                                {{ house.size }} 坪
+                                                ・
+                                                {% if house.address %}
+                                                    {{ house.address.city }} {{ house.address.district }}
+                                                {% endif %}
+                                        </p>
 
                     <p>
                         上架人：

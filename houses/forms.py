@@ -1,30 +1,32 @@
 from django import forms
-from .models import House
-from .models import Appointment
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from .models import House, Appointment
+
 
 class HouseForm(forms.ModelForm):
     class Meta:
         model = House
-        fields = ['title', 'location', 'price', 'room_type', 'size', 'description','image',]
+        fields = [
+            'title',
+            'house_type',
+            'address',
+            'price',
+            'size',
+            'description',
+        ]
 
         labels = {
             'title': '房源名稱',
-            'location': '地區',
+            'house_type': '房型',
+            'address': '詳細地址',
             'price': '租金',
-            'room_type': '房型',
             'size': '坪數',
             'description': '房源介紹',
-            'image': '房源照片',
         }
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django import forms
 
 class RegisterForm(UserCreationForm):
-
     ROLE_CHOICES = [
         ('renter', '租客'),
         ('landlord', '房東'),
@@ -55,8 +57,9 @@ class RegisterForm(UserCreationForm):
             'password2',
             'role'
         )
-class AppointmentForm(forms.ModelForm):
 
+
+class AppointmentForm(forms.ModelForm):
     appointment_date = forms.DateField(
         label='預約日期',
         widget=forms.DateInput(
@@ -68,25 +71,14 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-
         fields = [
             'appointment_date',
-            'message'
-        ]
-
-        labels = {
-            'message': '留言',
-        }
-
-    class Meta:
-        model = Appointment
-
-        fields = [
-            'appointment_date',
+            'phone',
             'message'
         ]
 
         labels = {
             'appointment_date': '預約日期',
+            'phone': '聯絡電話',
             'message': '留言',
         }

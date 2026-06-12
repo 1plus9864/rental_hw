@@ -166,25 +166,27 @@
           <div class="listing-cover cover-1">
             <div class="listing-badge">房源</div>
 
-            {% if house.image %}
-              <img
-                src="{{ house.image.url }}"
-                alt="{{ house.title }}"
-                style="
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                  border-radius: 24px;
-                "
-              >
-            {% else %}
-              <div class="listing-fake">
-                <div class="top-dots">
-                  <span></span><span></span><span></span>
+            {% with first_image=house.images.all|first %}
+              {% if first_image and first_image.image_url %}
+                <img
+                  src="{{ first_image.image_url }}"
+                  alt="{{ house.title }}"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 24px;
+                  "
+                >
+              {% else %}
+                <div class="listing-fake">
+                  <div class="top-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="rect"></div>
                 </div>
-                <div class="rect"></div>
-              </div>
-            {% endif %}
+              {% endif %}
+            {% endwith %}
           </div>
 
           <div class="listing-content">
@@ -193,7 +195,16 @@
               <div class="price-pill">${{ house.price }} / 月</div>
             </div>
 
-            <p>{{ house.room_type }} ・ {{ house.size }} 坪 ・ {{ house.location }}</p>
+            <p>
+              {% if house.house_type %}
+                {{ house.house_type.type_name }}
+              {% endif %}
+              ・ {{ house.size }} 坪
+
+              {% if house.address %}
+                ・ {{ house.address }}
+              {% endif %}
+            </p>
             <p>上架人：{{ house.owner.username }}</p>
 
             <div class="listing-actions">
